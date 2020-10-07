@@ -38,7 +38,7 @@ $sql = "SELECT * FROM books";
 if ($bookdate = $mysqli->query($sql)) {
     // while ($row = $bookdate->fetch_assoc()) {
     //     echo "{$row["id"]} {$row["name"]} {$row["email"]}" . PHP_EOL;
-    $result->close();
+    $bookdate->close();
 }
 ?>
 <!DOCTYPE html>
@@ -99,7 +99,7 @@ if ($bookdate = $mysqli->query($sql)) {
 					<tbody>
 						<?php
 						//⑩SQLの実行結果の変数から1レコードのデータを取り出す。レコードがない場合はループを終了する。
-						while(/* ⑩の処理を書く */){
+						while($row = $bookdate->fetch_assoc()){
 							//⑪extract変数を使用し、1レコードのデータを渡す。
 
 							echo "<tr id='book'>";
