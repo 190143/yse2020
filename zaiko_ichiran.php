@@ -24,6 +24,12 @@ if (/* ②の処理を書く */){
 
 
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
+$sql = "SELECT * FROM books";
+if ($bookdate = $mysqli->query($sql)) {
+    // while ($row = $bookdate->fetch_assoc()) {
+    //     echo "{$row["id"]} {$row["name"]} {$row["email"]}" . PHP_EOL;
+    $bookdate->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -45,8 +51,9 @@ if (/* ②の処理を書く */){
 				 * ⑧SESSIONの「success」にメッセージが設定されているかを判定する。
 				 * 設定されていた場合はif文の中に入る。
 				 */ 
-				if(/* ⑧の処理を書く */){
+				if(isset($_SESSION["success"])){
 					//⑨SESSIONの「success」の中身を表示する。
+					echo $_SESSION["success"];
 				}
 				?>
 			</div>
@@ -82,7 +89,7 @@ if (/* ②の処理を書く */){
 					<tbody>
 						<?php
 						//⑩SQLの実行結果の変数から1レコードのデータを取り出す。レコードがない場合はループを終了する。
-						while(/* ⑩の処理を書く */){
+						while($row = $bookdate->fetch_assoc()){
 							//⑪extract変数を使用し、1レコードのデータを渡す。
 
 							echo "<tr id='book'>";
