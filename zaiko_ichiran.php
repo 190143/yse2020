@@ -11,7 +11,7 @@
 */
 
 //①セッションを開始する
-
+	//session_start();
 //②SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
 if (/* ②の処理を書く */){
 	//③SESSIONの「error2」に「ログインしてください」と設定する。
@@ -19,9 +19,20 @@ if (/* ②の処理を書く */){
 }
 
 //⑤データベースへ接続し、接続情報を変数に保存する
+$host = 'localhost';
+$user_name = 'root';
+$db_name = 'zaiko2020_yse';
+$password = '';
+$mysqli = new mysqli($host, $user_name, $password, $db_name);
 
+if ($mysqli->connect_error) {
+    echo $mysqli->connect_error;
+    exit();
+} else {
+    //echo 'ok' . PHP_EOL;
 //⑥データベースで使用する文字コードを「UTF8」にする
-
+$mysqli->set_charset('utf8');
+}
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 ?>
 <!DOCTYPE html>
