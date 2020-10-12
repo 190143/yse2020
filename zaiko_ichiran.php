@@ -107,7 +107,7 @@ if ($bookdate = $mysqli->query($sql)) {
 							// extract($id);
 
 							echo "<tr id='book'>";
-							// echo "<td id='check'><input type='checkbox' name='books[]'value='session_id ([ string $id ] )'></td>";
+							echo "<td id='check'><input type='checkbox' name='books[]'value='".$row['id']."'></td>";
 							echo "<td id='id'>".$row['id']."</td>";
 							echo "<td id='title'>".$row['title']."</td>";
 							echo "<td id='author'>".$row['author']."</td>";
