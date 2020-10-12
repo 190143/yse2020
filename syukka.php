@@ -24,9 +24,19 @@ if (/* ③の処理を書く */){
 }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
+$host = 'localhost';
+$user_name = 'root';
+$db_name = 'zaiko2020_yse';
+$password = '';
+$mysqli = new mysqli($host, $user_name, $password, $db_name);
 
+if ($mysqli->connect_error) {
+    echo $mysqli->connect_error;
+    exit();
+} else {
 //⑦データベースで使用する文字コードを「UTF8」にする
-
+	$mysqli->set_charset('utf8');
+}
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 if(/* ⑧の処理を行う */){
 	//⑨SESSIONの「success」に「出荷する商品が選択されていません」と設定する。
