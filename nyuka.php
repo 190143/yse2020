@@ -117,7 +117,7 @@ function getId($id,$con){
 					 */
     				foreach($_POST['books'] as $book){
 						// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
-						getId($book,$mysqli)
+						$getId_id = getId($book,$mysqli)
 					?>
 					<input type="hidden" value="<?php echo	/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
 					<tr>
