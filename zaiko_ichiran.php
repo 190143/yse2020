@@ -104,16 +104,16 @@ if ($bookdate = $mysqli->query($sql)) {
 						while($row = $bookdate->fetch_assoc()){
 							//⑪extract変数を使用し、1レコードのデータを渡す。
 							//$extract = $extract->get($id);
-							extract($id);
+							// extract($id);
 
 							echo "<tr id='book'>";
-							echo "<td id='check'><input type='checkbox' name='books[]'value='session_id ([ string $id ] )'></td>";
-							echo "<td id='id'>$_post[id]</td>";
-							echo "<td id='title'>/* ⑭titleを表示する */</td>";
-							echo "<td id='author'>/* ⑮authorを表示する */</td>";
-							echo "<td id='date'>/* ⑯salesDateを表示する */</td>";
-							echo "<td id='price'>/* ⑰priceを表示する */</td>";
-							echo "<td id='stock'>/* ⑱stockを表示する */</td>";
+							// echo "<td id='check'><input type='checkbox' name='books[]'value='session_id ([ string $id ] )'></td>";
+							echo "<td id='id'>".$row['id']."</td>";
+							echo "<td id='title'>".$row['title']."</td>";
+							echo "<td id='author'>".$row['author']."</td>";
+							echo "<td id='date'>".$row['salesDate']."</td>";
+							echo "<td id='price'>".$row['price']."</td>";
+							echo "<td id='stock'>".$row['stock']."</td>";
 							echo "</tr>";
 						}
 						$bookdate->close();
