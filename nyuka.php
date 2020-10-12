@@ -30,14 +30,14 @@ $host = 'localhost';
 $user_name = 'root';
 $db_name = 'zaiko2020_yse';
 $password = '';
-$mysqli = new mysqli($host, $user_name, $password, $db_name);
+$con = new mysqli($host, $user_name, $password, $db_name);
 
-if ($mysqli->connect_error) {
-    echo $mysqli->connect_error;
+if ($con->connect_error) {
+    echo $con->connect_error;
     exit();
 } else {
 //⑦データベースで使用する文字コードを「UTF8」にする
-	$mysqli->set_charset('utf8');
+	$con->set_charset('utf8');
 }
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 if(/* ⑧の処理を行う */){
@@ -52,10 +52,11 @@ function getId($id,$con){
 	 * SQLの実行結果を変数に保存する。
 	 */
 	$sql = "SELECT * FROM books WHERE $id";
-	if ($bookdate = $mysqli->query($sql)) {
+	if ($bookdate = $con->query($sql)) {
 		$bookdate->close();
 	}
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
+
 }
 
 ?>
