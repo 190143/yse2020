@@ -17,7 +17,7 @@
  && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
 // 	//②セッションを開始する
 	session_start();
-// }
+ }
 
 // //③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
 // if (/* ③の処理を書く */){
