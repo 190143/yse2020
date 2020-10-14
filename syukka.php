@@ -13,8 +13,10 @@
  * ①session_status()の結果が「PHP_SESSION_NONE」と一致するか判定する。
  * 一致した場合はif文の中に入る。
  */
-// if (/* ①の処理を行う */) {
+ if (/* ①の処理を行う */(function_exists('session_status')
+ && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
 // 	//②セッションを開始する
+	session_start();
 // }
 
 // //③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。

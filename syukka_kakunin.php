@@ -9,7 +9,7 @@
 */
 
 //①セッションを開始する
-
+session_start();
 function getByid($id,$con){
 	/* 
 	 * ②書籍を取得するSQLを作成する実行する。
