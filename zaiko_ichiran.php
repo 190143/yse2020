@@ -37,11 +37,8 @@ if ($mysqli->connect_error) {
 
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 $sql = "SELECT * FROM books";
-if ($bookdate = $mysqli->query($sql)) {
-    // while ($row = $bookdate->fetch_assoc()) {
-    //     echo "{$row["id"]} {$row["name"]} {$row["email"]}" . PHP_EOL;
-    // $bookdate->close();
-}
+$bookdate = $mysqli->query($sql);
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
