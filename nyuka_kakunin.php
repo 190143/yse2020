@@ -9,15 +9,21 @@
 */
 
 //①セッションを開始する
-
+	session_start();
 function getByid($id,$con){
 	/* 
 	 * ②書籍を取得するSQLを作成する実行する。
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
 	 * SQLの実行結果を変数に保存する。
 	 */
-
-	//③実行した結果から1レコード取得し、returnで値を返す。
+	$sql = "SELECT * FROM books WHERE id = ".$id;
+	$bookdate = null;
+	if ($bookdate = $con->query($sql)) {
+		//③実行した結果から1レコード取得し、returnで値を返す。
+		return $bookdate;
+	}
+	$bookdate->close();
+	
 }
 
 function updateByid($id,$con,$total){
@@ -26,6 +32,10 @@ function updateByid($id,$con,$total){
 	 * 引数で受け取った$totalの値で在庫数を上書く。
 	 * その際にWHERE句でメソッドの引数に$idに一致する書籍のみ取得する。
 	 */
+	$sql = "UPDATE books SET stock = ".$total."WHERE id = ".$id;
+	$con->query($sql);
+	
+
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
