@@ -13,15 +13,15 @@
  * ①session_status()の結果が「PHP_SESSION_NONE」と一致するか判定する。
  * 一致した場合はif文の中に入る。
  */
-if (/* ①の処理を行う */) {
-	//②セッションを開始する
-}
+// if (/* ①の処理を行う */) {
+// 	//②セッションを開始する
+// }
 
-//③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if (/* ③の処理を書く */){
-	//④SESSIONの「error2」に「ログインしてください」と設定する。
-	//⑤ログイン画面へ遷移する。
-}
+// //③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
+// if (/* ③の処理を書く */){
+// 	//④SESSIONの「error2」に「ログインしてください」と設定する。
+// 	//⑤ログイン画面へ遷移する。
+// }
 
 //⑥データベースへ接続し、接続情報を変数に保存する
 $host = 'localhost';
@@ -38,10 +38,10 @@ if ($mysqli->connect_error) {
 	$mysqli->set_charset('utf8');
 }
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
-if(/* ⑧の処理を行う */){
-	//⑨SESSIONの「success」に「出荷する商品が選択されていません」と設定する。
-	//⑩在庫一覧画面へ遷移する。
-}
+// if(/* ⑧の処理を行う */){
+// 	//⑨SESSIONの「success」に「出荷する商品が選択されていません」と設定する。
+// 	//⑩在庫一覧画面へ遷移する。
+// }
 
 function getId($id,$con){
 	/* 
@@ -91,9 +91,9 @@ function getId($id,$con){
 		 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
 		 * 設定されていた場合はif文の中に入る。
 		 */ 
-		if(/* ⑬の処理を書く */){
-			//⑭SESSIONの「error」の中身を表示する。
-		}
+		// if(/* ⑬の処理を書く */){
+		// 	//⑭SESSIONの「error」の中身を表示する。
+		// }
 		?>
 		</div>
 		<div id="center">
