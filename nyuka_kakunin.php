@@ -34,8 +34,6 @@ function updateByid($id,$con,$total){
 	 */
 	$sql = "UPDATE books SET stock = ".$total."WHERE id = ".$id;
 	$con->query($sql);
-	
-
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
@@ -45,23 +43,42 @@ function updateByid($id,$con,$total){
 // }
 
 //⑧データベースへ接続し、接続情報を変数に保存する
+$host = 'localhost';
+$user_name = 'root';
+$db_name = 'zaiko2020_yse';
+$password = '';
+$mysqli = new mysqli($host, $user_name, $password, $db_name);
 
-//⑨データベースで使用する文字コードを「UTF8」にする
+if ($mysqli->connect_error) {
+    echo $mysqli->connect_error;
+    exit();
+} else {
+    //echo 'ok' . PHP_EOL;
+	//⑨データベースで使用する文字コードを「UTF8」にする
+	$mysqli->set_charset('utf8');
+}
 
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
+$book_quantity = 0;
 
 //⑪POSTの「books」から値を取得し、変数に設定する。
-// foreach(/* ⑪の処理を書く */){
-// 	/*
-// 	 * ⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
-// 	 * 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
-// 	 * 半角数字以外の文字が入っていた場合はif文の中に入る。
-// 	 */
-// 	if (/* ⑫の処理を書く */) {
-// 		//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
-// 		//⑭「include」を使用して「nyuka.php」を呼び出す。
-// 		//⑮「exit」関数で処理を終了する。
-// 	}
+foreach($_POST['books'] as $books){
+	//⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
+	$update_stock = $_POST['stock'][$book_quantity];
+
+	// 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
+	// 半角数字以外の文字が入っていた場合はif文の中に入る。
+	// var_dump($update_stock);
+	if (!is_numeric($update_stock)) {
+		//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
+		$_SESSION['error'] = '数値以外が入力されています';
+		
+		//⑭「include」を使用して「nyuka.php」を呼び出す。
+		include 'nyuka.php';
+
+		//⑮「exit」関数で処理を終了する。
+		exit;
+	}
 
 // 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
 
@@ -75,7 +92,8 @@ function updateByid($id,$con,$total){
 // 	}
 
 	//㉒ ⑩で宣言した変数をインクリメントで値を1増やす。
-//}
+	$book_quantity ++;
+}
 
 /*
  * ㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
@@ -123,19 +141,19 @@ function updateByid($id,$con,$total){
 						//㉜書籍数をカウントするための変数を宣言し、値を0で初期化する。
 
 						//㉝POSTの「books」から値を取得し、変数に設定する。
-						foreach(/* ㉝の処理を書く */){
-							//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
-						?>
+						// foreach(/* ㉝の処理を書く */){
+						// 	//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
+						// ?>
 						<tr>
-							<td><?php echo	/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
-							<td><?php echo	/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */;?></td>
-							<td><?php echo	/* ㊱ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
+							<td><?php // echo	/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
+							<td><?php // echo	/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */;?></td>
+							<td><?php // echo	/* ㊱ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
 						</tr>
-						<input type="hidden" name="books[]" value="<?php echo /* ㊲ ㉝で取得した値を設定する */; ?>">
-						<input type="hidden" name="stock[]" value='<?php echo /* ㊳POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
+						<input type="hidden" name="books[]" value="<?php // echo /* ㊲ ㉝で取得した値を設定する */; ?>">
+						<input type="hidden" name="stock[]" value='<?php // echo /* ㊳POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
 						<?php
 							//㊴ ㉜で宣言した変数をインクリメントで値を1増やす。
-						}
+						// }
 						?>
 					</tbody>
 				</table>
