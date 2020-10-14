@@ -18,7 +18,7 @@ if (/* ①の処理を行う */(function_exists('session_status')
 	
 // 	//②セッションを開始する
 session_start();
-// }
+}
 
 
 // //③SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
