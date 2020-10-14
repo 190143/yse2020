@@ -35,7 +35,7 @@ function updateByid($id,$con,$total){
 	 * その際にWHERE句でメソッドの引数に$idに一致する書籍のみ取得する。
 	 */
 	$sql = "UPDATE books SET stock = ".$total."WHERE id = ".$id;
-	$total = $mysql->query($sql);
+	$mysql->query($sql);
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
