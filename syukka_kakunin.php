@@ -35,7 +35,7 @@ function updateByid($id,$con,$total){
 	 * その際にWHERE句でメソッドの引数に$idに一致する書籍のみ取得する。
 	 */
 	$sql = "UPDATE books SET stock = ".$total."WHERE id = ".$id;
-	$mysql->query($sql);
+	$con->query($sql);
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
@@ -45,23 +45,33 @@ function updateByid($id,$con,$total){
 // }
 
 //⑧データベースへ接続し、接続情報を変数に保存する
+$host = 'localhost';
+$user_name = 'root';
+$db_name = 'zaiko2020_yse';
+$password = '';
+$mysqli = new mysqli($host, $user_name, $password, $db_name);
 
+if ($mysqli->connect_error) {
+    echo $mysqli->connect_error;
+    exit();
+} else {
 //⑨データベースで使用する文字コードを「UTF8」にする
 $mysqli->set_charset('utf8');
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
 
 //⑪POSTの「books」から値を取得し、変数に設定する。
-// foreach(/* ⑪の処理を書く */){
-// 	/*
-// 	 * ⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
-// 	 * 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
-// 	 * 半角数字以外の文字が入っていた場合はif文の中に入る。
-// 	 */
-// 	if (/* ⑫の処理を書く */) {
-// 		//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
-// 		//⑭「include」を使用して「syukka.php」を呼び出す。
-// 		//⑮「exit」関数で処理を終了する。
-// 	}
+foreach ($_post['books'] as $book){
+	/*
+	 * ⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
+	 * 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
+	 * 半角数字以外の文字が入っていた場合はif文の中に入る。
+	 */
+	// if (/* ⑫の処理を書く */) {
+	// 	//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
+	// 	//⑭「include」を使用して「syukka.php」を呼び出す。
+	// 	//⑮「exit」関数で処理を終了する。
+	// }
+}
 
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
 
