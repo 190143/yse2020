@@ -49,7 +49,7 @@ function getId($id,$con){
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
 	 * SQLの実行結果を変数に保存する。
 	 */
-	$sql = "SELECT * FROM books WHERE $id";
+	$sql = "SELECT * FROM books WHERE id = ".$id;
 
 	// 変数呼び出し
 	$bookdate = null;
