@@ -50,11 +50,14 @@ function getId($id,$con){
 	 * SQLの実行結果を変数に保存する。
 	 */
 	$sql = "SELECT * FROM books WHERE $id";
+
+	// 変数呼び出し
+	$bookdate = null;
 	if ($bookdate = $con->query($sql)) {
-		$bookdate->close();
 	//⑫実行した結果から1レコード取得し、returnで値を返す。
 	return $bookdate;
 	}
+	$bookdate->close();
 }
 ?>
 <!DOCTYPE html>
@@ -112,7 +115,9 @@ function getId($id,$con){
 				 */
 				foreach($_POST['books'] as $book){
 					// ⑯「getId」関数を呼び出し、変数に戻り値を入れる。その際引数に⑮の処理で取得した値と⑥のDBの接続情報を渡す。
-					$getId_id = getId($book,$mysqli)
+					// $getId_id = getId($book,$mysqli);
+					$getId_id = getId($book,$mysqli)->fetch_assoc();
+					// var_dump($book);
 				?>
 				<input type="hidden" value="<?php echo $getId_id['id']/* ⑰ ⑯の戻り値からidを取り出し、設定する */;?>" name="books[]">
 				<tr>
