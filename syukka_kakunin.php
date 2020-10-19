@@ -145,7 +145,7 @@ $book_quantity ++;
 					$book = getByID($book, $pdo);
 					 ?>
 					<tr>
-						<td><?php // echo	/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
+						<td><?php echo $book = $_POST['title'];	/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
 						<td><?php echo $book = $_POST['stock'];	/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */?></td>
 						<td><?php  echo	$book_quantity = $_POST['stock'];/* ㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
 					</tr>
