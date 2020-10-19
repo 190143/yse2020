@@ -58,7 +58,7 @@ if ($mysqli->connect_error) {
 //⑨データベースで使用する文字コードを「UTF8」にする
 $mysqli->set_charset('utf8');
 //⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
-
+$book_quantity = 0;
 //⑪POSTの「books」から値を取得し、変数に設定する。
 foreach ($_post['books'] as $book){
 	/*
@@ -85,7 +85,8 @@ foreach ($_post['books'] as $book){
 // 	}
 	
 // 	//㉒ ⑩で宣言した変数をインクリメントで値を1増やす。
-// }
+$book_quantity ++;
+}
 
 /*
  * ㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
@@ -131,9 +132,9 @@ foreach ($_post['books'] as $book){
 				<tbody>
 					<?php 
 					//㉜書籍数をカウントするための変数を宣言し、値を0で初期化する。
-
+					$book_quantity = 0;
 					//㉝POSTの「books」から値を取得し、変数に設定する。
-					// foreach(/* ㉝の処理を書く */){
+					foreach ($_post['books'] as $book){
 					// 	//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
 					// ?>
 					// <tr>
@@ -145,7 +146,7 @@ foreach ($_post['books'] as $book){
 					// <input type="hidden" name="stock[]" value='<?php // echo /* ㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
 					// <?php
 					// 	//㊵ ㉜で宣言した変数をインクリメントで値を1増やす。
-					// }
+					 }
 					?>
 				</tbody>
 			</table>
