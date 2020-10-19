@@ -80,7 +80,7 @@ foreach ($_POST['books'] as $book){
 }
 
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
-	$book_data_1 = getByid($books, $mysqli)->fetch_assoc();
+	$book_data_1 = getByid($book, $mysqli)->fetch_assoc();
 	//⑰ ⑯で取得した書籍の情報の「stock」と、⑩の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
 	$book_total = $book_data_1['stock'] - $_POST['stock'][$book_quantity];
 	//⑱ ⑰の値が0未満か判定する。0未満の場合はif文の中に入る。
@@ -144,7 +144,7 @@ $book_quantity ++;
 					//㉜書籍数をカウントするための変数を宣言し、値を0で初期化する。
 					$book_quantity = 0;
 					//㉝POSTの「books」から値を取得し、変数に設定する。
-					foreach ($_post['books'] as $book){
+					foreach ($_POST['books'] as $book){
 					// 	//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
 					$book = getByID($book, $pdo);
 					 ?>
@@ -153,7 +153,7 @@ $book_quantity ++;
 						<td><?php echo $book = $_POST['stock'];	/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */?></td>
 						<td><?php  echo	$book_quantity = $_POST['stock'];/* ㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
 					</tr>
-					<input type="hidden" name="books[]" value="<?php echo $_post['books'] /* ㊳ ㉝で取得した値を設定する */;?>">
+					<input type="hidden" name="books[]" value="<?php echo $_POST['books'] /* ㊳ ㉝で取得した値を設定する */;?>">
 					<input type="hidden" name="stock[]" value='<?php echo $book = $_POST['stock']/* ㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
 					<?php
 					// 	//㊵ ㉜で宣言した変数をインクリメントで値を1増やす。
