@@ -149,7 +149,7 @@ $book_quantity ++;
 					$book = getByID($book, $mysqli);
 					 ?>
 					<tr>
-						<td><?php echo $book['title'];	/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */;?></td>
+						<td><?php echo $book['title'];	/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */?></td>
 						<td><?php echo $book['stock'];	/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */?></td>
 						<td><?php  echo	$book_quantity['stock'];/* ㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
 					</tr>
