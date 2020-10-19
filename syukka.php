@@ -45,7 +45,7 @@ if( empty($books) ){
 	$SESSION = "出荷する商品が選択されていません";
 	echo $SESSION = $_POST['sussion'];
 // 	//⑩在庫一覧画面へ遷移する。
-header( "Location: zaiko_ichiran.php'" ) ;
+header( "Location: zaiko_ichiran.php" ) ;
 exit ;
 }
 
