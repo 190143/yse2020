@@ -42,7 +42,7 @@ if ($mysqli->connect_error) {
 	$mysqli->set_charset('utf8');
 }
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
-if(empty($_post['books'])/* ⑧の処理を行う */){
+if(empty($_POST['books'])/* ⑧の処理を行う */){
 // 	//⑨SESSIONの「success」に「入荷する商品が選択されていません」と設定する。
 $_SESSION['success'] = '入荷する商品が選択されていません';
 // 	//⑩在庫一覧画面へ遷移する。
