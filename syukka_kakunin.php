@@ -149,7 +149,7 @@ $book_quantity ++;
 						<td><?php echo $book = $_POST['stock'];	/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */?></td>
 						<td><?php  echo	$book_quantity = $_POST['stock'];/* ㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */;?></td>
 					</tr>
-					<input type="hidden" name="books[]" value="<?php // echo /* ㊳ ㉝で取得した値を設定する */;?>">
+					<input type="hidden" name="books[]" value="<?php echo $_post['books'] /* ㊳ ㉝で取得した値を設定する */;?>">
 					<input type="hidden" name="stock[]" value='<?php echo $book = $_POST['stock']/* ㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */;?>'>
 					<?php
 					// 	//㊵ ㉜で宣言した変数をインクリメントで値を1増やす。
