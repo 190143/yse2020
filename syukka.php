@@ -42,7 +42,7 @@ if ($mysqli->connect_error) {
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
 if( empty($books) ){
 // 	//⑨SESSIONの「success」に「出荷する商品が選択されていません」と設定する。
-	$SESSION = "出荷する商品が選択されていません";
+	$_SESSION['success'] = "出荷する商品が選択されていません";
 	echo $SESSION = $_POST['sussion'];
 // 	//⑩在庫一覧画面へ遷移する。
 header( "Location: zaiko_ichiran.php" ) ;
