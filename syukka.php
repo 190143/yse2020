@@ -40,10 +40,14 @@ if ($mysqli->connect_error) {
 	$mysqli->set_charset('utf8');
 }
 //⑧POSTの「books」の値が空か判定する。空の場合はif文の中に入る。
-// if(/* ⑧の処理を行う */){
+if( empty($books) ){
 // 	//⑨SESSIONの「success」に「出荷する商品が選択されていません」と設定する。
+	$SESSION = "出荷する商品が選択されていません";
+	echo $SESSION = $_POST['sussion'];
 // 	//⑩在庫一覧画面へ遷移する。
-// }
+header( "Location: zaiko_ichiran.php'" ) ;
+exit ;
+}
 
 function getId($id,$con){
 	/* 
@@ -91,11 +95,13 @@ function getId($id,$con){
 		<?php
 		/*
 		 * ⑬SESSIONの「error」にメッセージが設定されているかを判定する。
+		 */
+		/*
 		 * 設定されていた場合はif文の中に入る。
-		 */ 
-		// if(/* ⑬の処理を書く */){
-		// 	//⑭SESSIONの「error」の中身を表示する。
-		// }
+		*/
+		if(/* ⑬の処理を書く */){
+			//⑭SESSIONの「error」の中身を表示する。
+		}
 		?>
 		</div>
 		<div id="center">
