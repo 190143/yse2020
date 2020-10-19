@@ -63,18 +63,24 @@ $mysqli->set_charset('utf8');
 foreach ($_post['books'] as $book){
 	/*
 	 * ⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
-	 * 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
+	 */
+	 $update_stock = $_POST['stock'][$book_quantity];
+	 /* 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
 	 * 半角数字以外の文字が入っていた場合はif文の中に入る。
 	 */
+	if (!is_numeric($update_stock)) {
 	// if (/* ⑫の処理を書く */) {
 	// 	//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
+	$_SESSION['error'] = '数値以外が入力されています';
 	// 	//⑭「include」を使用して「syukka.php」を呼び出す。
+	include 'nyuka.php';
 	// 	//⑮「exit」関数で処理を終了する。
-	// }
+	exit;
+	 }
 }
 
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
-
+	$book = getByID($book, $pdo);
 	//⑰ ⑯で取得した書籍の情報の「stock」と、⑩の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
 
 	//⑱ ⑰の値が0未満か判定する。0未満の場合はif文の中に入る。
