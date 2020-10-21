@@ -59,6 +59,7 @@ if ($mysqli->connect_error) {
 } else {
 	//⑨データベースで使用する文字コードを「UTF8」にする
 	$mysqli->set_charset('utf8');
+}
 	//⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
 	$book_quantity = 0;
 	//⑪POSTの「books」から値を取得し、変数に設定する。
@@ -78,7 +79,7 @@ if ($mysqli->connect_error) {
 			// 	//⑮「exit」関数で処理を終了する。
 			exit;
 		}
-	}
+
 
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
 	$book_data_1 = getByid($book, $mysqli)->fetch_assoc();
