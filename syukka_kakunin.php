@@ -104,20 +104,27 @@ if ($mysqli->connect_error) {
  * ㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
  * 値が入っている場合は中身に「ok」が設定されていることを確認する。
  */
-// if(/* ㉓の処理を書く */){
-// 	//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
+if(/* ㉓の処理を書く */!empty($_POST['add'])){
+	if ($_POST['add'] == 'ok') {
+	//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
+	$number_of_books_1 = 0;
+	//㉕POSTの「books」から値を取得し、変数に設定する。
+	foreach(/* ㉕の処理を書く */$_POST['books'] as $book){
+		//㉖「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉕の処理で取得した値と⑧のDBの接続情報を渡す。
+		$book_data_3 = getByid($book, $mysqli)->fetch_assoc();
+		//㉗ ㉖で取得した書籍の情報の「stock」と、㉔の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
+		$book_total_number = $book_data_3['stock'] + $_POST['stock'][$number_of_books_1];
+		//㉘「updateByid」関数を呼び出す。その際に引数に㉕の処理で取得した値と⑧のDBの接続情報と㉗で計算した値を渡す。
+		updateByid($book, $mysqli, $book_total_number);
+		//㉙ ㉔で宣言した変数をインクリメントで値を1増やす。
+		$book_quantity++;
+	}
 
-// 	//㉕POSTの「books」から値を取得し、変数に設定する。
-// 	foreach(/* ㉕の処理を書く */){
-// 		//㉖「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉕の処理で取得した値と⑧のDBの接続情報を渡す。
-// 		//㉗ ㉖で取得した書籍の情報の「stock」と、㉔の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
-// 		//㉘「updateByid」関数を呼び出す。その際に引数に㉕の処理で取得した値と⑧のDBの接続情報と㉗で計算した値を渡す。
-// 		//㉙ ㉔で宣言した変数をインクリメントで値を1増やす。
-// 	}
-
-// 	//㉚SESSIONの「success」に「入荷が完了しました」と設定する。
-// 	//㉛「header」関数を使用して在庫一覧画面へ遷移する。
-// }
+	//㉚SESSIONの「success」に「入荷が完了しました」と設定する。
+	$_SESSION['success'] = '入荷が完了しました。';
+	//㉛「header」関数を使用して在庫一覧画面へ遷移する。
+	header("Location: http://localhost/yse2020/zaiko_ichiran.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
