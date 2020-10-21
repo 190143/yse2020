@@ -63,22 +63,22 @@ if ($mysqli->connect_error) {
 	//⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
 	$book_quantity = 0;
 	//⑪POSTの「books」から値を取得し、変数に設定する。
-	foreach ($_POST['books'] as $book) {
+foreach ($_POST['books'] as $book) {
 		/*
 	 * ⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
 	 */
-		$update_stock = $_POST['stock'][$book_quantity];
+	$update_stock = $_POST['stock'][$book_quantity];
 		/* 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
 	 * 半角数字以外の文字が入っていた場合はif文の中に入る。
 	 */
-		if (!is_numeric($update_stock)) {
-			// 	//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
-			$_SESSION['error'] = '数値以外が入力されています';
-			// 	//⑭「include」を使用して「syukka.php」を呼び出す。
-			include 'syukka.php';
-			// 	//⑮「exit」関数で処理を終了する。
-			exit;
-		}
+	if (!is_numeric($update_stock)) {
+		// 	//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
+		$_SESSION['error'] = '数値以外が入力されています';
+		// 	//⑭「include」を使用して「syukka.php」を呼び出す。
+		include 'syukka.php';
+		// 	//⑮「exit」関数で処理を終了する。
+		exit;
+	}
 
 
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
@@ -157,7 +157,7 @@ if (/* ㉓の処理を書く */!empty($_POST['add'])) {
 						//㉝POSTの「books」から値を取得し、変数に設定する。
 						foreach ($_POST['books'] as $book_1) {
 							// 	//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
-							$book_2 = getByID($book, $mysqli)->fetch_assoc();
+							$book_2 = getByID($book_1, $mysqli)->fetch_assoc();
 						?>
 							<tr>
 								<td><?php echo $book_2['title'];	/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */ ?></td>
