@@ -133,7 +133,7 @@ if (!empty($_POST['add'])) {
 		$_SESSION['success'] = '入荷が完了しました。';
 
 		//㉛「header」関数を使用して在庫一覧画面へ遷移する。
-		header("Location: http://localhost/yse2020/zaiko_ichiran.php");
+		header("Location: zaiko_ichiran.php");
 	}
 }
 ?>

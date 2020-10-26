@@ -125,7 +125,7 @@ if (/* ㉓の処理を書く */!empty($_POST['add'])) {
 	//㉚SESSIONの「success」に「入荷が完了しました」と設定する。
 	$_SESSION['success'] = '入荷が完了しました。';
 	//㉛「header」関数を使用して在庫一覧画面へ遷移する。
-	header("Location: http://localhost/yse2020/zaiko_ichiran.php");
+	header("Location: zaiko_ichiran.php");
 }
 ?>
 <!DOCTYPE html>
