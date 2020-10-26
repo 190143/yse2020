@@ -127,13 +127,21 @@ function getId($id, $con)
 						// var_dump($book);
 					?>
 						<input type="hidden" value="<?php echo $getId_id['id']/* ⑰ ⑯の戻り値からidを取り出し、設定する */; ?>" name="books[]">
+						<?php
+						/* ⑱ ⑯の戻り値からidを取り出し、表示する */
+						/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */
+						/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */
+						/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */
+						/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */
+						/* ㉓ ⑯の戻り値からstockを取り出し、表示する */
+						?>
 						<tr>
-							<td><?php echo $getId_id["id"]/* ⑱ ⑯の戻り値からidを取り出し、表示する */; ?></td>
-							<td><?php echo $getId_id["title"]/* ⑲ ⑯の戻り値からtitleを取り出し、表示する */; ?></td>
-							<td><?php echo $getId_id["author"]/* ⑳ ⑯の戻り値からauthorを取り出し、表示する */; ?></td>
-							<td><?php echo $getId_id["salesDate"]/* ㉑ ⑯の戻り値からsalesDateを取り出し、表示する */; ?></td>
-							<td><?php echo $getId_id["price"]/* ㉒ ⑯の戻り値からpriceを取り出し、表示する */; ?></td>
-							<td><?php echo $getId_id["stock"]/* ㉓ ⑯の戻り値からstockを取り出し、表示する */; ?></td>
+							<td><?php echo $getId_id["id"]; ?></td>
+							<td><?php echo $getId_id["title"]; ?></td>
+							<td><?php echo $getId_id["author"]; ?></td>
+							<td><?php echo $getId_id["salesDate"]; ?></td>
+							<td><?php echo $getId_id["price"]; ?></td>
+							<td><?php echo $getId_id["stock"]; ?></td>
 							<td><input type='text' name='stock[]' size='5' maxlength='11' required></td>
 						</tr>
 					<?php
