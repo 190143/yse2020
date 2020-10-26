@@ -112,7 +112,7 @@ foreach ($_POST['books'] as $books) {
 if (!empty($_POST['add'])) {
 	if ($_POST['add'] == 'ok') {
 		//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
-		$number_of_books_1 = 0;
+		$index = 0;
 
 		//㉕POSTの「books」から値を取得し、変数に設定する。
 		foreach ($_POST['books'] as $book) {
@@ -120,13 +120,13 @@ if (!empty($_POST['add'])) {
 			$book_data_3 = getByid($book, $mysqli)->fetch_assoc();
 
 			//㉗ ㉖で取得した書籍の情報の「stock」と、㉔の変数を元にPOSTの「stock」から値を取り出し、足した値を変数に保存する。
-			$book_total_number = $book_data_3['stock'] + $_POST['stock'][$number_of_books_1];
+			$book_total_number = $book_data_3['stock'] + $_POST['stock'][$index];
 
 			//㉘「updateByid」関数を呼び出す。その際に引数に㉕の処理で取得した値と⑧のDBの接続情報と㉗で計算した値を渡す。
 			updateByid($book, $mysqli, $book_total_number);
 
 			//㉙ ㉔で宣言した変数をインクリメントで値を1増やす。
-			$number_of_books_1++;
+			$index++;
 		}
 		//㉚SESSIONの「success」に「入荷が完了しました」と設定する。
 		$_SESSION['success'] = '入荷が完了しました。';
@@ -163,7 +163,7 @@ if (!empty($_POST['add'])) {
 					<tbody>
 						<?php
 						//㉜書籍数をカウントするための変数を宣言し、値を0で初期化する。
-						$number_of_books_2 = 0;
+						$box = 0;
 
 						//㉝POSTの「books」から値を取得し、変数に設定する。
 						foreach ($_POST['books'] as $post_book) {
@@ -178,16 +178,16 @@ if (!empty($_POST['add'])) {
 								<!-- ㊱ ㉞で取得した書籍情報からstockを表示する。  -->
 								<td><?php echo $book_data_2['stock']; ?></td>
 								<!-- ㊱ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 -->
-								<td><?php echo $_POST['stock'][$number_of_books_2]; ?></td>
+								<td><?php echo $_POST['stock'][$box]; ?></td>
 							</tr>
 
 							<!-- ㊲ ㉝で取得した値を設定する  -->
 							<input type="hidden" name="books[]" value="<?php echo $post_book; ?>">
 							<!-- ㊳POSTの「stock」に設定されている値を㉜の変数を使用して設定する。  -->
-							<input type="hidden" name="stock[]" value='<?php echo $_POST['stock'][$number_of_books_2]; ?>'>
+							<input type="hidden" name="stock[]" value='<?php echo $_POST['stock'][$box]; ?>'>
 						<?php
 							//㊴ ㉜で宣言した変数をインクリメントで値を1増やす。
-							$number_of_books_2++;
+							$box++;
 						}
 						?>
 					</tbody>
