@@ -10,8 +10,7 @@
 
 //①セッションを開始する
 session_start();
-function getByid($id, $con)
-{
+function getByid($id, $con){
 	/* 
 	 * ②書籍を取得するSQLを作成する実行する。
 	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
@@ -38,11 +37,11 @@ function updateByid($id, $con, $total)
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if ($_SESSION['login'] == false){
+if ($_SESSION['login'] == false) {
 	//③SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION['error2'] = 'ログインしてください';
 	//④ログイン画面へ遷移する。
-	header( "Location: login.php" ) ;
+	header("Location: login.php");
 }
 
 //⑧データベースへ接続し、接続情報を変数に保存する
@@ -174,12 +173,18 @@ if (!empty($_POST['add'])) {
 							$book_data_2 = getByid($post_book, $mysqli)->fetch_assoc();
 						?>
 							<tr>
-								<td><?php echo $book_data_2['title']/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */; ?></td>
-								<td><?php echo $book_data_2['stock']/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */; ?></td>
-								<td><?php echo $_POST['stock'][$number_of_books_2]/* ㊱ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */; ?></td>
+								<!-- ㉟ ㉞で取得した書籍情報からtitleを表示する。 -->
+								<td><?php echo $book_data_2['title']; ?></td>
+								<!-- ㊱ ㉞で取得した書籍情報からstockを表示する。  -->
+								<td><?php echo $book_data_2['stock']; ?></td>
+								<!-- ㊱ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 -->
+								<td><?php echo $_POST['stock'][$number_of_books_2]; ?></td>
 							</tr>
-							<input type="hidden" name="books[]" value="<?php echo $post_book/* ㊲ ㉝で取得した値を設定する */; ?>">
-							<input type="hidden" name="stock[]" value='<?php echo $_POST['stock'][$number_of_books_2]/* ㊳POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */; ?>'>
+
+							<!-- ㊲ ㉝で取得した値を設定する  -->
+							<input type="hidden" name="books[]" value="<?php echo $post_book; ?>">
+							<!-- ㊳POSTの「stock」に設定されている値を㉜の変数を使用して設定する。  -->
+							<input type="hidden" name="stock[]" value='<?php echo $_POST['stock'][$number_of_books_2]; ?>'>
 						<?php
 							//㊴ ㉜で宣言した変数をインクリメントで値を1増やす。
 							$number_of_books_2++;
@@ -202,5 +207,4 @@ if (!empty($_POST['add'])) {
 		<footer>株式会社アクロイト</footer>
 	</div>
 </body>
-
 </html>
