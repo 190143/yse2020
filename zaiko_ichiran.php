@@ -14,11 +14,11 @@
 session_start();
 
 //②SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if ($_SESSION['login'] == false){
+if ($_SESSION['login'] == false) {
 	//③SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION['error2'] = 'ログインしてください';
 	//④ログイン画面へ遷移する。
-	header( "Location: login.php" ) ;
+	header("Location: login.php");
 }
 
 //⑤データベースへ接続し、接続情報を変数に保存する
@@ -29,10 +29,10 @@ $password = '';
 $mysqli = new mysqli($host, $user_name, $password, $db_name);
 
 if ($mysqli->connect_error) {
-    echo $mysqli->connect_error;
-    exit();
+	echo $mysqli->connect_error;
+	exit();
 } else {
-    //echo 'ok' . PHP_EOL;
+	//echo 'ok' . PHP_EOL;
 	//⑥データベースで使用する文字コードを「UTF8」にする
 	$mysqli->set_charset('utf8');
 }
@@ -44,11 +44,13 @@ $bookdate = $mysqli->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
 	<meta charset="UTF-8">
 	<title>書籍一覧</title>
 	<link rel="stylesheet" href="css/ichiran.css" type="text/css" />
 </head>
+
 <body>
 	<div id="header">
 		<h1>書籍一覧</h1>
@@ -61,19 +63,19 @@ $bookdate = $mysqli->query($sql);
 				/*
 				 * ⑧SESSIONの「success」にメッセージが設定されているかを判定する。
 				 * 設定されていた場合はif文の中に入る。
-				 */ 
-				if(isset($_SESSION["success"])){
+				 */
+				if (isset($_SESSION["success"])) {
 					//⑨SESSIONの「success」の中身を表示する。
 					echo $_SESSION["success"];
 				}
 				?>
 			</div>
-			
+
 			<!-- 左メニュー -->
 			<div id="left">
 				<p id="ninsyou_ippan">
 					<?php
-						echo @$_SESSION["account_name"];
+					echo @$_SESSION["account_name"];
 					?><br>
 					<button type="button" id="logout" onclick="location.href='logout.php'">ログアウト</button>
 				</p>
@@ -100,19 +102,19 @@ $bookdate = $mysqli->query($sql);
 					<tbody>
 						<?php
 						//⑩SQLの実行結果の変数から1レコードのデータを取り出す。レコードがない場合はループを終了する。
-						while($row = $bookdate->fetch_assoc()){
+						while ($row = $bookdate->fetch_assoc()) {
 							//⑪extract変数を使用し、1レコードのデータを渡す。
 							//$extract = $extract->get($id);
 							// extract($id);
 
 							echo "<tr id='book'>";
-							echo "<td id='check'><input type='checkbox' name='books[]'value='".$row['id']."'></td>";
-							echo "<td id='id'>".$row['id']."</td>";
-							echo "<td id='title'>".$row['title']."</td>";
-							echo "<td id='author'>".$row['author']."</td>";
-							echo "<td id='date'>".$row['salesDate']."</td>";
-							echo "<td id='price'>".$row['price']."</td>";
-							echo "<td id='stock'>".$row['stock']."</td>";
+							echo "<td id='check'><input type='checkbox' name='books[]'value='" . $row['id'] . "'></td>";
+							echo "<td id='id'>" . $row['id'] . "</td>";
+							echo "<td id='title'>" . $row['title'] . "</td>";
+							echo "<td id='author'>" . $row['author'] . "</td>";
+							echo "<td id='date'>" . $row['salesDate'] . "</td>";
+							echo "<td id='price'>" . $row['price'] . "</td>";
+							echo "<td id='stock'>" . $row['stock'] . "</td>";
 							echo "</tr>";
 						}
 						$bookdate->close();
@@ -126,4 +128,5 @@ $bookdate = $mysqli->query($sql);
 		<footer>株式会社アクロイト</footer>
 	</div>
 </body>
+
 </html>
