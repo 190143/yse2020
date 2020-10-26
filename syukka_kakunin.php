@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
 【機能】
 出荷で入力された個数を表示する。出荷を実行した場合は対象の書籍の在庫数から出荷数を
 引いた数でデータベースの書籍の在庫数を更新する。
@@ -13,11 +13,9 @@ session_start();
 
 function getByid($id, $con)
 {
-	/* 
-	 * ②書籍を取得するSQLを作成する実行する。
-	 * その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
-	 * SQLの実行結果を変数に保存する。
-	 */
+	//②書籍を取得するSQLを作成する実行する。
+	//その際にWHERE句でメソッドの引数の$idに一致する書籍のみ取得する。
+	//SQLの実行結果を変数に保存する。
 	$sql = "SELECT * FROM books WHERE id = " . $id;
 
 	// 変数呼び出し
@@ -31,21 +29,19 @@ function getByid($id, $con)
 
 function updateByid($id, $con, $total)
 {
-	/*
-	 * ④書籍情報の在庫数を更新するSQLを実行する。
-	 * 引数で受け取った$totalの値で在庫数を上書く。
-	 * その際にWHERE句でメソッドの引数に$idに一致する書籍のみ取得する。
-	 */
+	//④書籍情報の在庫数を更新するSQLを実行する。
+	//引数で受け取った$totalの値で在庫数を上書く。
+	//その際にWHERE句でメソッドの引数に$idに一致する書籍のみ取得する。
 	$sql = "UPDATE books SET stock = " . $total . " WHERE id = " . $id;
 	$con->query($sql);
 }
 
 //⑤SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
-if ($_SESSION['login'] == false){
+if ($_SESSION['login'] == false) {
 	//③SESSIONの「error2」に「ログインしてください」と設定する。
 	$_SESSION['error2'] = 'ログインしてください';
 	//④ログイン画面へ遷移する。
-	header( "Location: login.php" ) ;
+	header("Location: login.php");
 }
 
 //⑧データベースへ接続し、接続情報を変数に保存する
@@ -62,17 +58,14 @@ if ($mysqli->connect_error) {
 	//⑨データベースで使用する文字コードを「UTF8」にする
 	$mysqli->set_charset('utf8');
 }
-	//⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
-	$book_quantity = 0;
-	//⑪POSTの「books」から値を取得し、変数に設定する。
+//⑩書籍数をカウントするための変数を宣言し、値を0で初期化する
+$book_quantity = 0;
+//⑪POSTの「books」から値を取得し、変数に設定する。
 foreach ($_POST['books'] as $book) {
-		/*
-	 * ⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
-	 */
+	//⑫POSTの「stock」について⑩の変数の値を使用して値を取り出す。
 	$update_stock = $_POST['stock'][$book_quantity];
-		/* 半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
-	 * 半角数字以外の文字が入っていた場合はif文の中に入る。
-	 */
+	//半角数字以外の文字が設定されていないかを「is_numeric」関数を使用して確認する。
+	//半角数字以外の文字が入っていた場合はif文の中に入る。
 	if (!is_numeric($update_stock)) {
 		// 	//⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
 		$_SESSION['error'] = '数値以外が入力されています';
@@ -82,13 +75,12 @@ foreach ($_POST['books'] as $book) {
 		exit;
 	}
 
-
 	//⑯「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に⑪の処理で取得した値と⑧のDBの接続情報を渡す。
 	$book_data_1 = getByid($book, $mysqli)->fetch_assoc();
 	//⑰ ⑯で取得した書籍の情報の「stock」と、⑩の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
 	$book_total = $book_data_1['stock'] - $_POST['stock'][$book_quantity];
 	//⑱ ⑰の値が0未満か判定する。0未満の場合はif文の中に入る。
-	// 	if(/* ⑱の処理を行う */){
+	//⑱の処理を行う
 	if ($book_total < 0) {
 		//⑲SESSIONの「error」に「出荷する個数が在庫数を超えています」と設定する。
 		$_SESSION['error'] = '出荷する個数が在庫数を超えています';
@@ -102,16 +94,16 @@ foreach ($_POST['books'] as $book) {
 	$book_quantity++;
 }
 
-/*
- * ㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
- * 値が入っている場合は中身に「ok」が設定されていることを確認する。
- */
-if (/* ㉓の処理を書く */!empty($_POST['add'])) {
+//㉓POSTでこの画面のボタンの「add」に値が入ってるか確認する。
+//値が入っている場合は中身に「ok」が設定されていることを確認する。
+//㉓の処理を書く
+if (!empty($_POST['add'])) {
 	if ($_POST['add'] == 'ok') {
 		//㉔書籍数をカウントするための変数を宣言し、値を0で初期化する。
 		$number_of_books_1 = 0;
 		//㉕POSTの「books」から値を取得し、変数に設定する。
-		foreach (/* ㉕の処理を書く */$_POST['books'] as $book) {
+		//㉕の処理を書く
+		foreach ($_POST['books'] as $book) {
 			//㉖「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉕の処理で取得した値と⑧のDBの接続情報を渡す。
 			$book_data_3 = getByid($book, $mysqli)->fetch_assoc();
 			//㉗ ㉖で取得した書籍の情報の「stock」と、㉔の変数を元にPOSTの「stock」から値を取り出して書籍情報の「stock」から値を引いた値を変数に保存する。
@@ -158,18 +150,25 @@ if (/* ㉓の処理を書く */!empty($_POST['add'])) {
 						$book_quantity = 0;
 						//㉝POSTの「books」から値を取得し、変数に設定する。
 						foreach ($_POST['books'] as $book_1) {
-							// 	//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
+							//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
 							$book_2 = getByID($book_1, $mysqli)->fetch_assoc();
 						?>
+							<?php
+							//㉟ ㉞で取得した書籍情報からtitleを表示する。
+							//㊱ ㉞で取得した書籍情報からstockを表示する。
+							//㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。
+							//㊳ ㉝で取得した値を設定する。
+							//㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。
+							?>
 							<tr>
-								<td><?php echo $book_2['title'];	/* ㉟ ㉞で取得した書籍情報からtitleを表示する。 */ ?></td>
-								<td><?php echo $book_2['stock'];	/* ㊱ ㉞で取得した書籍情報からstockを表示する。 */ ?></td>
-								<td><?php echo $_POST['stock'][$book_quantity]/* ㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 */ ?></td>
+								<td><?php echo $book_2['title']; ?></td>
+								<td><?php echo $book_2['stock']; ?></td>
+								<td><?php echo $_POST['stock'][$book_quantity] ?></td>
 							</tr>
-							<input type="hidden" name="books[]" value="<?php echo $book_1 /* ㊳ ㉝で取得した値を設定する */; ?>">
-							<input type="hidden" name="stock[]" value='<?php echo $_POST['stock'][$book_quantity]/* ㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 */; ?>'>
+							<input type="hidden" name="books[]" value="<?php echo $book_1; ?>">
+							<input type="hidden" name="stock[]" value='<?php echo $_POST['stock'][$book_quantity]; ?>'>
 						<?php
-							// 	//㊵ ㉜で宣言した変数をインクリメントで値を1増やす。
+							//㊵ ㉜で宣言した変数をインクリメントで値を1増やす。
 							$book_quantity++;
 						}
 						?>
