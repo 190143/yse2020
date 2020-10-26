@@ -153,19 +153,17 @@ if (!empty($_POST['add'])) {
 							//㉞「getByid」関数を呼び出し、変数に戻り値を入れる。その際引数に㉜の処理で取得した値と⑧のDBの接続情報を渡す。
 							$book_2 = getByID($book_1, $mysqli)->fetch_assoc();
 						?>
-							<?php
-							//㉟ ㉞で取得した書籍情報からtitleを表示する。
-							//㊱ ㉞で取得した書籍情報からstockを表示する。
-							//㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。
-							//㊳ ㉝で取得した値を設定する。
-							//㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。
-							?>
 							<tr>
+								<!-- //㉟ ㉞で取得した書籍情報からtitleを表示する。 -->
 								<td><?php echo $book_2['title']; ?></td>
+								<!-- //㊱ ㉞で取得した書籍情報からstockを表示する。 -->
 								<td><?php echo $book_2['stock']; ?></td>
+								<!-- //㊲ POSTの「stock」に設定されている値を㉜の変数を使用して呼び出す。 -->
 								<td><?php echo $_POST['stock'][$book_quantity] ?></td>
 							</tr>
+							<!-- //㊳ ㉝で取得した値を設定する。 -->
 							<input type="hidden" name="books[]" value="<?php echo $book_1; ?>">
+							<!-- //㊴「POSTの「stock」に設定されている値を㉜の変数を使用して設定する。 -->
 							<input type="hidden" name="stock[]" value='<?php echo $_POST['stock'][$book_quantity]; ?>'>
 						<?php
 							//㊵ ㉜で宣言した変数をインクリメントで値を1増やす。
