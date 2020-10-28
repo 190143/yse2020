@@ -96,7 +96,7 @@ $bookdate->close();
                     <input type="hidden" value="" name="books[]">
 
                 <tr>
-                    <td></td>
+                    <td><?php echo $new_id ?></td>
                     <td><input type="text" name='title[]' size='5' maxlength='11' required></td>
                     <td><input type="text" name='author[]' size='5' maxlength='11' required></td>
                     <td><input type="text" name='salesDate[]' size='5' maxlength='11' required></td>
