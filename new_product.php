@@ -40,7 +40,8 @@ $bookdate = $mysqli->query($sql);
 // 取得
 $getId_id = $bookdate->fetch_assoc();
 // id取得
-// var_dump($getId_id['id']);
+$new_id = $getId_id['id'] + 1;
+// var_dump($new_id);
 // 閉じる
 $bookdate->close();
 ?>
