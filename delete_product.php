@@ -110,5 +110,4 @@ foreach ($_POST['books'] as $book) {
         <footer>株式会社アクロイト</footer>
     </div>
 </body>
-
 </html>
