@@ -39,17 +39,30 @@ foreach ($_POST['books'] as $book) {
     $update_stock = $_POST['stock'][$index];
     if (!is_numeric($update_stock)) {
         $_SESSION['error'] = '数値以外が入力されています';
-        include 'syukka.php';
+        include 'zaiko_kakunin.php';
         exit;
     }
     $book_data_1 = getByid($book, $mysqli)->fetch_assoc();
     $book_total = $book_data_1['stock'] - $_POST['stock'][$index];
     if ($book_total < 0) {
         $_SESSION['error'] = '在庫数が0ではない';
-        include('syukka.php');
+        include('zaiko_kakunin.php');
         exit;
     }
     $index++;
+}
+if (!empty($_POST['add'])) {
+	if ($_POST['add'] == 'ok') {
+		$number_of_books_1 = 0;
+		foreach ($_POST['books'] as $book) {
+			$book_data_3 = getByid($book, $mysqli)->fetch_assoc();
+			$book_total_number = $book_data_3['stock'] - $_POST['stock'][$number_of_books_1];
+			updateByid($book, $mysqli, $book_total_number);
+			$index++;
+		}
+	}
+	$_SESSION['success'] = '削除しました';
+	header("Location: zaiko_ichiran.php");
 }
 ?>
 <!DOCTYPE html>
