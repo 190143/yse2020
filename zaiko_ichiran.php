@@ -107,20 +107,23 @@ $bookdate = $mysqli->query($sql);
 						<?php
 						//⑩SQLの実行結果の変数から1レコードのデータを取り出す。レコードがない場合はループを終了する。
 						while ($row = $bookdate->fetch_assoc()) {
-							//⑪extract変数を使用し、1レコードのデータを渡す。
-							//$extract = $extract->get($id);
-							// extract($id);
+							// displayが0だった場合非表示
+							if ($row['display'] == 1) {
+								//⑪extract変数を使用し、1レコードのデータを渡す。
+								//$extract = $extract->get($id);
+								// extract($id);
 
-							echo "<tr id='book'>";
-							// name = books[]でPOSTで$_POST['books']で受信できる
-							echo "<td id='check'><input type='checkbox' name='books[]'value='" . $row['id'] . "'></td>";
-							echo "<td id='id'>" . $row['id'] . "</td>";
-							echo "<td id='title'>" . $row['title'] . "</td>";
-							echo "<td id='author'>" . $row['author'] . "</td>";
-							echo "<td id='date'>" . $row['salesDate'] . "</td>";
-							echo "<td id='price'>" . $row['price'] . "</td>";
-							echo "<td id='stock'>" . $row['stock'] . "</td>";
-							echo "</tr>";
+								echo "<tr id='book'>";
+								// name = books[]でPOSTで$_POST['books']で受信できる
+								echo "<td id='check'><input type='checkbox' name='books[]'value='" . $row['id'] . "'></td>";
+								echo "<td id='id'>" . $row['id'] . "</td>";
+								echo "<td id='title'>" . $row['title'] . "</td>";
+								echo "<td id='author'>" . $row['author'] . "</td>";
+								echo "<td id='date'>" . $row['salesDate'] . "</td>";
+								echo "<td id='price'>" . $row['price'] . "</td>";
+								echo "<td id='stock'>" . $row['stock'] . "</td>";
+								echo "</tr>";
+							}
 						}
 						$bookdate->close();
 						?>
