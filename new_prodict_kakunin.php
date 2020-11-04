@@ -15,6 +15,8 @@ function new_prodict($con, $id, $title, $author, $salesDate, $price, $in_stock)
 
     // SQL文
     $sql = "INSERT INTO books (id, title, author, salesDate, isbn, price, stock) VALUES (" . $id . " , '" . $title . "' , '" . $author . "' , '" . $salesDate . "' , 0 , " . $price . " , " . $in_stock . ")";
+    // ...↓
+    // $sql = "INSERT INTO books (title, author, salesDate, isbn, price, stock) VALUES ('" . $title . "' , '" . $author . "' , '" . $salesDate . "' , 0 , " . $price . " , " . $in_stock . ")";
     // var_dump($sql);
     $con->query($sql);
 }
