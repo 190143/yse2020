@@ -1,5 +1,9 @@
 <?php
+if ((function_exists('session_status')
+&& session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
 session_start();
+}
+
 function getByid($id, $con)
 {
     $sql = "SELECT * FROM books WHERE id = " . $id;
@@ -8,6 +12,11 @@ function getByid($id, $con)
         return $bookdate;
     }
     $bookdate->close();
+}
+
+function delete_record()
+{
+    $sql = "UPDATE books SET display = 0 WHERE id = ". $_POST['id']."";
 }
 
 function updateByid($id, $con, $total)
@@ -33,40 +42,13 @@ if ($mysqli->connect_error) {
 } else {
     $mysqli->set_charset('utf8');
 }
-$index = 0;
+$_SESSION['error'] = '数値以外が入力されています';
+$_SESSION['success'] = '入荷が完了しました。';
+//header("Location: zaiko_ichiran.php");
 
-foreach ($_POST['books'] as $book) {
-    $update_stock = $_POST['stock'][$index];
-    if (!is_numeric($update_stock)) {
-        $_SESSION['error'] = '数値以外が入力されています';
-        include 'zaiko_kakunin.php';
-        exit;
-    }
-    $book_data_1 = getByid($book, $mysqli)->fetch_assoc();
-    $book_total = $book_data_1['stock'] - $_POST['stock'][$index];
-    if ($book_total < 0) {
-        $_SESSION['error'] = '在庫数が0ではない';
-        include('zaiko_kakunin.php');
-        exit;
-    }
-    $index++;
-}
-if (!empty($_POST['add'])) {
-    if ($_POST['add'] == 'ok') {
-        $number_of_books_1 = 0;
-        foreach ($_POST['books'] as $book) {
-            $book_data_3 = getByid($book, $mysqli)->fetch_assoc();
-            $book_total_number = $book_data_3['stock'] - $_POST['stock'][$number_of_books_1];
-            updateByid($book, $mysqli, $book_total_number);
-            $index++;
-        }
-    }
-    $_SESSION['success'] = '削除しました';
-    header("Location: zaiko_ichiran.php");
-}
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
@@ -92,7 +74,6 @@ if (!empty($_POST['add'])) {
 
             <div id="error">
                 <?php
-
                 if (isset($_SESSION["error"])) {
                     echo $_SESSION["error"];
                 }
@@ -113,7 +94,7 @@ if (!empty($_POST['add'])) {
                     <?php
 
                     foreach ($_POST['books'] as $book) {
-                    $getId_id = getId($book, $mysqli)->fetch_assoc();
+                    $getId_id = getById($book, $mysqli)->fetch_assoc();
                     ?>
                         <input type="hidden" value="<?php echo $getId_id['id']; ?>" name="books[]">
                         <tr>
@@ -123,13 +104,13 @@ if (!empty($_POST['add'])) {
                             <td><?php echo $getId_id["salesDate"]; ?></td>
                             <td><?php echo $getId_id["price"]; ?></td>
                             <td><?php echo $getId_id["stock"]; ?></td>
-                            <td><input type='text' name='stock[]' size='5' maxlength='11' required></td>
                         </tr>
                     <?php
                     }
                     ?>
                 </table>
-                <button type="submit" id="kakutei" formmethod="POST" name="decision" value="1">確定</button>
+                <button type="submit" id="kakutei" formmethod="POST" name="decision" value="1" formaction="delete_record">はい</button>
+                <button type="submit" id="kakutei" formmethod="POST" name="decision" value="2" formaction="zaiko_ichiran">いいえ</button>
             </div>
         </div>
     </form>
