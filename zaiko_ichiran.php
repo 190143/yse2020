@@ -112,6 +112,7 @@ $bookdate = $mysqli->query($sql);
 							// extract($id);
 
 							echo "<tr id='book'>";
+							// name = books[]でPOSTで$_POST['books']で受信できる
 							echo "<td id='check'><input type='checkbox' name='books[]'value='" . $row['id'] . "'></td>";
 							echo "<td id='id'>" . $row['id'] . "</td>";
 							echo "<td id='title'>" . $row['title'] . "</td>";
