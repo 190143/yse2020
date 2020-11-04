@@ -1,7 +1,19 @@
 <?php
-if ((function_exists('session_status')
-    && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
-    session_start();
+session_start();
+function getByid($id, $con)
+{
+    $sql = "SELECT * FROM books WHERE id = " . $id;
+    $bookdate = null;
+    if ($bookdate = $con->query($sql)) {
+        return $bookdate;
+    }
+    $bookdate->close();
+}
+
+function updateByid($id, $con, $total)
+{
+    $sql = "UPDATE books SET stock = " . $total . " WHERE id = " . $id;
+    $con->query($sql);
 }
 
 if ($_SESSION['login'] == false) {
@@ -21,22 +33,36 @@ if ($mysqli->connect_error) {
 } else {
     $mysqli->set_charset('utf8');
 }
-if (empty($_POST['books'])) {
-    $_SESSION['success'] = "削除する商品が選択されていません";
-    echo $SESSION = $_POST['sussion'];
-    header("Location: zaiko_ichiran.php");
-    exit;
-}
+$index = 0;
 
-function getId($id, $con)
-{
-    $sql = "SELECT * FROM books WHERE id = " . $id;
-
-    $bookdate = null;
-    if ($bookdate = $con->query($sql)) {
-        return $bookdate;
+foreach ($_POST['books'] as $book) {
+    $update_stock = $_POST['stock'][$index];
+    if (!is_numeric($update_stock)) {
+        $_SESSION['error'] = '数値以外が入力されています';
+        include 'zaiko_kakunin.php';
+        exit;
     }
-    $bookdate->close();
+    $book_data_1 = getByid($book, $mysqli)->fetch_assoc();
+    $book_total = $book_data_1['stock'] - $_POST['stock'][$index];
+    if ($book_total < 0) {
+        $_SESSION['error'] = '在庫数が0ではない';
+        include('zaiko_kakunin.php');
+        exit;
+    }
+    $index++;
+}
+if (!empty($_POST['add'])) {
+    if ($_POST['add'] == 'ok') {
+        $number_of_books_1 = 0;
+        foreach ($_POST['books'] as $book) {
+            $book_data_3 = getByid($book, $mysqli)->fetch_assoc();
+            $book_total_number = $book_data_3['stock'] - $_POST['stock'][$number_of_books_1];
+            updateByid($book, $mysqli, $book_total_number);
+            $index++;
+        }
+    }
+    $_SESSION['success'] = '削除しました';
+    header("Location: zaiko_ichiran.php");
 }
 ?>
 <!DOCTYPE html>
@@ -52,49 +78,65 @@ function getId($id, $con)
     <div id="header">
         <h1>商品削除</h1>
     </div>
-    <form action="syukka_kakunin.php" method="post" id="test">
+
+    <div id="menu">
+        <nav>
+            <ul>
+                <li><a href="zaiko_ichiran.php?page=1">書籍一覧</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <form action="syukka_kakunin.php" method="post">
         <div id="pagebody">
+
+            <div id="error">
+                <?php
+
+                if (isset($_SESSION["error"])) {
+                    echo $_SESSION["error"];
+                }
+                ?>
+            </div>
             <div id="center">
                 <table>
                     <thead>
                         <tr>
+                            <th id="id">ID</th>
                             <th id="book_name">書籍名</th>
+                            <th id="author">著者名</th>
+                            <th id="salesDate">発売日</th>
+                            <th id="itemPrice">金額(円)</th>
                             <th id="stock">在庫数</th>
-                            <th id="stock">削除数</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php
-                        $index = 0;
-                        foreach ($_POST['books'] as $book_1) {
-                            $book_2 = getByID($book_1, $mysqli)->fetch_assoc();
-                        ?>
-                            <tr>
-                                <td><?php echo $book_2['title']; ?></td>
-                                <td><?php echo $book_2['stock']; ?></td>
-                                <td><?php echo $_POST['stock'][$index] ?></td>
-                            </tr>
-                            <input type="hidden" name="books[]" value="<?php echo $book_1; ?>">
-                            <input type="hidden" name="stock[]" value='<?php echo $_POST['stock'][$index]; ?>'>
-                        <?php
-                            $index++;
-                        }
-                        ?>
-                    </tbody>
+                    <?php
+
+                    foreach ($_POST['books'] as $book) {
+                    $getId_id = getId($book, $mysqli)->fetch_assoc();
+                    ?>
+                        <input type="hidden" value="<?php echo $getId_id['id']; ?>" name="books[]">
+                        <tr>
+                            <td><?php echo $getId_id["id"]; ?></td>
+                            <td><?php echo $getId_id["title"]; ?></td>
+                            <td><?php echo $getId_id["author"]; ?></td>
+                            <td><?php echo $getId_id["salesDate"]; ?></td>
+                            <td><?php echo $getId_id["price"]; ?></td>
+                            <td><?php echo $getId_id["stock"]; ?></td>
+                            <td><input type='text' name='stock[]' size='5' maxlength='11' required></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
                 </table>
-                <div id="kakunin">
-                    <p>
-                        上記の書籍を削除します。<br>
-                        よろしいですか？
-                    </p>
-                    <button type="submit" id="message" formmethod="POST" name="add" value="ok">はい</button>
-                    <button type="submit" id="message" formaction="syukka.php">いいえ</button>
-                </div>
+                <button type="submit" id="kakutei" formmethod="POST" name="decision" value="1">確定</button>
             </div>
         </div>
     </form>
+    <!-- フッター -->
     <div id="footer">
         <footer>株式会社アクロイト</footer>
     </div>
 </body>
+
 </html>
