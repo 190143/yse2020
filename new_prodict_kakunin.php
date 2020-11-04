@@ -14,19 +14,20 @@ function new_prodict($con, $id, $title, $author, $salesDate, $price, $in_stock)
 {
 
     // SQL文
-    $sql = "INSERT INTO books (id, title, author, salesDate, isbn, price, stock) VALUES (" . $id . " , '" . $title . "' , '" . $author . "' , '" . $salesDate . "' , 0 , " . $price . " , " . $in_stock . ")";
+    // ID / タイトル / 著作者人 / 発売日 / ISBNコード / 価格 / 在庫数 / 入荷数
+    $sql = "INSERT INTO books (id, title, author, salesDate, isbn, price, stock, display) VALUES (" . $id . " , '" . $title . "' , '" . $author . "' , '" . $salesDate . "' , 0 , " . $price . " , " . $in_stock . " , 1)";
     // ...↓
     // $sql = "INSERT INTO books (title, author, salesDate, isbn, price, stock) VALUES ('" . $title . "' , '" . $author . "' , '" . $salesDate . "' , 0 , " . $price . " , " . $in_stock . ")";
-    // var_dump($sql);
+    var_dump($sql);
     $con->query($sql);
 }
 
 // //SESSIONの「login」フラグがfalseか判定する。「login」フラグがfalseの場合はif文の中に入る。
 if ($_SESSION['login'] == false) {
-	//③SESSIONの「error2」に「ログインしてください」と設定する。
-	$_SESSION['error2'] = 'ログインしてください';
-	//④ログイン画面へ遷移する。
-	header("Location: login.php");
+    //③SESSIONの「error2」に「ログインしてください」と設定する。
+    $_SESSION['error2'] = 'ログインしてください';
+    //④ログイン画面へ遷移する。
+    header("Location: login.php");
 }
 
 //データベースへ接続し、接続情報を変数に保存する
@@ -49,14 +50,14 @@ if ($mysqli->connect_error) {
 if (!empty($_POST['add'])) {
     if ($_POST['add'] == 'ok') {
         // 文字列の結合
-        $date = $_POST['salesDate_year']."年".$_POST['salesDate_month']."月".$_POST['salesDate_day']."日";
+        $date = $_POST['salesDate_year'] . "年" . $_POST['salesDate_month'] . "月" . $_POST['salesDate_day'] . "日";
         // SQLに追加
         new_prodict($mysqli, $_POST['id'], $_POST['title'], $_POST['author'], $date, $_POST['price'], $_POST['in_stock']);
     }
     //SESSIONの「success」に「登録が完了しました」と設定する。
     $_SESSION['success'] = '登録が完了しました。';
     //「header」関数を使用して在庫一覧画面へ遷移する。
-    header("Location: zaiko_ichiran.php");
+    // header("Location: zaiko_ichiran.php");
 }
 ?>
 
@@ -97,8 +98,8 @@ if (!empty($_POST['add'])) {
                             <th id="author">著者名</th>
                             <!-- <th id="salesDate">発売日</th> -->
                             <th id="salesDate_year">発売日の年</th>
-							<th id="salesDate_month">発売日の月</th>
-							<th id="salesDate_day">発売日の日</th>
+                            <th id="salesDate_month">発売日の月</th>
+                            <th id="salesDate_day">発売日の日</th>
                             <th id="itemPrice">金額(円)</th>
                             <th id="stock">在庫数</th>
                             <th id="in">入荷数</th>
@@ -108,7 +109,8 @@ if (!empty($_POST['add'])) {
                     <input type="hidden" value="<?php echo $_POST['id']; ?>" name="id">
                     <input type="hidden" value="<?php echo $_POST['title']; ?>" name="title">
                     <input type="hidden" value="<?php echo $_POST['author']; ?>" name="author">
-                    <!-- <input type="hidden" value="<?php // echo $_POST['salesDate']; ?>" name="salesDate"> -->
+                    <!-- <input type="hidden" value="<?php // echo $_POST['salesDate']; 
+                                                        ?>" name="salesDate"> -->
                     <input type="hidden" value="<?php echo $_POST['salesDate_year']; ?>" name="salesDate_year">
                     <input type="hidden" value="<?php echo $_POST['salesDate_month']; ?>" name="salesDate_month">
                     <input type="hidden" value="<?php echo $_POST['salesDate_day']; ?>" name="salesDate_day">
@@ -119,10 +121,11 @@ if (!empty($_POST['add'])) {
                         <td><?php echo $_POST['id']; ?></td>
                         <td><?php echo $_POST['title']; ?></td>
                         <td><?php echo $_POST['author']; ?></td>
-                        <!-- <td><?php //echo $_POST['salesDate']; ?></td> -->
+                        <!-- <td><?php //echo $_POST['salesDate']; 
+                                    ?></td> -->
                         <td><?php echo $_POST['salesDate_year']; ?><a>年</a></td>
-						<td><?php echo $_POST['salesDate_month']; ?><a>月</a></td>
-						<td><?php echo $_POST['salesDate_day']; ?><a>日</a></td>
+                        <td><?php echo $_POST['salesDate_month']; ?><a>月</a></td>
+                        <td><?php echo $_POST['salesDate_day']; ?><a>日</a></td>
                         <td><?php echo $_POST['price']; ?></td>
                         <td><?php echo $_POST['stock']; ?></td>
                         <td><?php echo $_POST['in_stock']; ?></td>
