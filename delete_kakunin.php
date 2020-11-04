@@ -1,8 +1,22 @@
 <?php
-if ((function_exists('session_status')
-    && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
-    session_start();
+session_start();
+
+function getByid($id, $con)
+{
+    $sql = "SELECT * FROM books WHERE id = " . $id;
+    $bookdate = null;
+    if ($bookdate = $con->query($sql)) {
+        return $bookdate;
+    }
+    $bookdate->close();
 }
+
+function updateByid($id, $con, $total)
+{
+    $sql = "UPDATE books SET stock = " . $total . " WHERE id = " . $id;
+    $con->query($sql);
+}
+
 if ($_SESSION['login'] == false) {
     $_SESSION['error2'] = 'ログインしてください';
     header("Location: login.php");
@@ -20,21 +34,35 @@ if ($mysqli->connect_error) {
 } else {
     $mysqli->set_charset('utf8');
 }
-if (empty($_POST['books'])) {
-    $_SESSION['success'] = "出荷する商品が選択されていません";
-    echo $SESSION = $_POST['sussion'];
-    header("Location: zaiko_ichiran.php");
-    exit;
+$index = 0;
+foreach ($_POST['books'] as $book) {
+    $update_stock = $_POST['stock'][$index];
+    if (!is_numeric($update_stock)) {
+        $_SESSION['error'] = '数値以外が入力されています';
+        include 'syukka.php';
+        exit;
+    }
+
+    $book_data_1 = getByid($book, $mysqli)->fetch_assoc();
+    $book_total = $book_data_1['stock'] - $_POST['stock'][$index];
+    if ($book_total < 0) {
+        $_SESSION['error'] = '出荷する個数が在庫数を超えています';
+        include('syukka.php');
+        exit;
+    }
 }
 
-function getId($id, $con)
-{
-    $sql = "SELECT * FROM books WHERE id = " . $id;
-    $bookdate = null;
-    if ($bookdate = $con->query($sql)) {
-        return $bookdate;
+if (!empty($_POST['add'])) {
+    if ($_POST['add'] == 'ok') {
+        $number_of_books_1 = 0;
+        foreach ($_POST['books'] as $book) {
+            $book_data_3 = getByid($book, $mysqli)->fetch_assoc();
+            $book_total_number = $book_data_3['stock'] - $_POST['stock'][$number_of_books_1];
+            updateByid($book, $mysqli, $book_total_number);
+        }
     }
-    $bookdate->close();
+    $_SESSION['success'] = '出荷が完了しました。';
+    header("Location: zaiko_ichiran.php");
 }
 ?>
 <!DOCTYPE html>
