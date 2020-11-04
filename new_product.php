@@ -81,7 +81,10 @@ $bookdate->close();
 							<th id="id">ID</th>
 							<th id="book_name">書籍名</th>
 							<th id="author">著者名</th>
-							<th id="salesDate">発売日</th>
+							<!-- <th id="salesDate">発売日の年</th> -->
+							<th id="salesDate_year">発売日の年</th>
+							<th id="salesDate_month">発売日の月</th>
+							<th id="salesDate_day">発売日の日</th>
 							<th id="itemPrice">金額(円)</th>
 							<th id="stock">在庫数</th>
 							<th id="in">入荷数</th>
@@ -93,9 +96,19 @@ $bookdate->close();
 						<td><?php echo $new_id ?></td>
 						<td><input type="text" name='title' size='5' maxlength='11' required></td>
 						<td><input type="text" name='author' size='5' maxlength='11' required></td>
-						<td><input type="text" name='salesDate' size='5' maxlength='11' required></td>
+						<!-- <td><input type="date" name="salesDate" required></td> -->
+						<!-- <td><input type="text" name='salesDate' size='5' maxlength='11' required></td> -->
+						<!-- 年 -->
+						<td><input type="text" name='salesDate_year' size='5' maxlength='11' required><a>年</a></td>
+						<!-- 月 -->
+						<td><input type="text" name='salesDate_month' size='5' maxlength='11' required><a>月</a></td>
+						<!-- 日 -->
+						<td><input type="text" name='salesDate_day' size='5' maxlength='11' required><a>日</a></td>
+						<!-- 値段 -->
 						<td><input type="text" name='price' size='5' maxlength='11' required></td>
+						<!-- 在庫数 -->
 						<td><input type="text" name='stock' size='5' maxlength='11' required></td>
+						<!-- 入荷数 -->
 						<td><input type='text' name='in_stock' size='5' maxlength='11' required></td>
 					</tr>
 				</table>
