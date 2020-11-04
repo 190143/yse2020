@@ -54,7 +54,7 @@ if (!empty($_POST['add'])) {
     //SESSIONの「success」に「登録が完了しました」と設定する。
     $_SESSION['success'] = '登録が完了しました。';
     //「header」関数を使用して在庫一覧画面へ遷移する。
-    // header("Location: zaiko_ichiran.php");
+    header("Location: zaiko_ichiran.php");
 }
 ?>
 
