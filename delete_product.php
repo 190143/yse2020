@@ -1,9 +1,14 @@
 <?php
+/*
+ * session_status()の結果が「PHP_SESSION_NONE」と一致するか判定する。
+ * 一致した場合はif文の中に入る。
+ */
 if ((function_exists('session_status')
-&& session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
-session_start();
+    && session_status() !== PHP_SESSION_ACTIVE) || !session_id()) {
+    session_start();
 }
 
+// 選択したIDから書籍情報を取得する
 function getByid($id, $con)
 {
     $sql = "SELECT * FROM books WHERE id = " . $id;
@@ -14,22 +19,32 @@ function getByid($id, $con)
     $bookdate->close();
 }
 
-function delete_record()
+// 選択した書籍（レコード）を非表示に変更
+function delete_record($con, $id)
 {
-    $sql = "UPDATE books SET display = 0 WHERE id = ". $_POST['id']."";
-}
-
-function updateByid($id, $con, $total)
-{
-    $sql = "UPDATE books SET stock = " . $total . " WHERE id = " . $id;
+    $sql = "UPDATE books SET display = 0 WHERE id = " . $id . ";";
+    var_dump($sql);
+    // SQLを実行 
     $con->query($sql);
 }
 
+// ログインしていない場合はログイン画面に移動
 if ($_SESSION['login'] == false) {
     $_SESSION['error2'] = 'ログインしてください';
     header("Location: login.php");
 }
 
+// 何も選択されていないとき
+if (empty($_POST['books'])) {
+    //⑨SESSIONの「success」に「削除する商品が選択されていません」と設定する。
+    $_SESSION['success'] = "削除する商品が選択されていません";
+    echo $SESSION = $_POST['sussion'];
+    //⑩在庫一覧画面へ遷移する。
+    header("Location: zaiko_ichiran.php");
+    exit;
+}
+
+// SQLに接続
 $host = 'localhost';
 $user_name = 'zaiko2020_yse';
 $db_name = 'zaiko2020_yse';
@@ -42,9 +57,19 @@ if ($mysqli->connect_error) {
 } else {
     $mysqli->set_charset('utf8');
 }
-$_SESSION['error'] = '数値以外が入力されています';
-$_SESSION['success'] = '入荷が完了しました。';
-//header("Location: zaiko_ichiran.php");
+
+// 削除画面で「はい」が押されたら実行
+if (!empty($_POST['add'])) {
+    if ($_POST['add'] == 'ok') {
+        // 繰り返す
+        foreach ($_POST['id'] as $id) {
+            var_dump($id);
+            delete_record($mysqli, $id);
+        }
+        $_SESSION['success'] = '削除が完了しました。';
+        header("Location: zaiko_ichiran.php");
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -69,7 +94,7 @@ $_SESSION['success'] = '入荷が完了しました。';
         </nav>
     </div>
 
-    <form action="syukka_kakunin.php" method="post">
+    <form action="delete_product.php" method="post">
         <div id="pagebody">
 
             <div id="error">
@@ -94,9 +119,18 @@ $_SESSION['success'] = '入荷が完了しました。';
                     <?php
 
                     foreach ($_POST['books'] as $book) {
-                    $getId_id = getById($book, $mysqli)->fetch_assoc();
+                        $getId_id = getById($book, $mysqli)->fetch_assoc();
+
+                        // 選択した書籍の在庫が1以上な場合は「在庫があります」とエラーを表示する
+                        if ($getId_id["stock"] >= 1) {
+
+                            // 何回も同じ文を繰り返してしまう...。
+                            // var_dump('在庫がある商品が選択されています');
+                            $_SESSION['error'] = '在庫がある商品が選択されています';
+                        }
                     ?>
-                        <input type="hidden" value="<?php echo $getId_id['id']; ?>" name="books[]">
+                        <input type="hidden" value="<?php echo $getId_id['id']; ?>" name="id[]">
+                        <input type="hidden" value="<?php echo $getId_id['books']; ?>" name="books[]">
                         <tr>
                             <td><?php echo $getId_id["id"]; ?></td>
                             <td><?php echo $getId_id["title"]; ?></td>
@@ -109,8 +143,14 @@ $_SESSION['success'] = '入荷が完了しました。';
                     }
                     ?>
                 </table>
-                <button type="submit" id="kakutei" formmethod="POST" name="decision" value="1" formaction="delete_record">はい</button>
-                <button type="submit" id="kakutei" formmethod="POST" name="decision" value="2" formaction="zaiko_ichiran">いいえ</button>
+                <div id="kakunin">
+                    <p>
+                        上記の書籍を削除します。<br>
+                        よろしいですか？
+                    </p>
+                    <button type="submit" id="message" formmethod="POST" name="add" value="ok">はい</button>
+                    <button type="submit" id="message" formaction="new_product.php">いいえ</button>
+                </div>
             </div>
         </div>
     </form>
