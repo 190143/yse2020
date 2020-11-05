@@ -17,6 +17,16 @@ if ($_SESSION['login'] == false) {
 	header("Location: login.php");
 }
 
+// 何も選択されていないとき
+if (empty($_POST['books'])) {
+	//⑨SESSIONの「success」に「新規登録する商品が選択されていません」と設定する。
+	$_SESSION['success'] = "新規登録する商品が選択されていません";
+	echo $SESSION = $_POST['sussion'];
+	//⑩在庫一覧画面へ遷移する。
+	header("Location: zaiko_ichiran.php");
+	exit;
+}
+
 //データベースへ接続し、接続情報を変数に保存する
 $host = 'localhost';
 $user_name = 'zaiko2020_yse';
