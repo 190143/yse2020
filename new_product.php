@@ -66,7 +66,7 @@ $bookdate->close();
 	<div id="menu">
 		<nav>
 			<ul>
-				<li><a href="zaiko_ichiran.php?page=1">追加書籍</a></li>
+				<li><a href="zaiko_ichiran.php?page=1">書籍一覧</a></li>
 			</ul>
 		</nav>
 	</div>
