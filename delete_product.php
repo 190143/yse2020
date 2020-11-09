@@ -149,7 +149,7 @@ if (!empty($_POST['add'])) {
                         よろしいですか？
                     </p>
                     <button type="submit" id="message" formmethod="POST" name="add" value="ok">はい</button>
-                    <button type="submit" id="message" formaction="new_product.php">いいえ</button>
+                    <button type="submit" id="message" formaction="zaiko_ichiran.php">いいえ</button>
                 </div>
             </div>
         </div>
