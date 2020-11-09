@@ -76,14 +76,6 @@ if (!empty($_POST['add'])) {
     <div id="header">
         <h1>新商品追加確認</h1>
     </div>
-    <!-- メニュー -->
-    <div id="menu">
-        <nav>
-            <ul>
-                <li><a href="zaiko_ichiran.php?page=1">追加書籍</a></li>
-            </ul>
-        </nav>
-    </div>
     <form action="new_prodict_kakunin.php" method="post">
         <div id="pagebody">
             <!-- エラーメッセージ -->
