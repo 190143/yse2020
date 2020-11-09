@@ -18,7 +18,7 @@ function new_prodict($con, $id, $title, $author, $salesDate, $price, $in_stock)
     $sql = "INSERT INTO books (id, title, author, salesDate, isbn, price, stock, display) VALUES (" . $id . " , '" . $title . "' , '" . $author . "' , '" . $salesDate . "' , 0 , " . $price . " , " . $in_stock . " , 1)";
     // ...↓
     // $sql = "INSERT INTO books (title, author, salesDate, isbn, price, stock) VALUES ('" . $title . "' , '" . $author . "' , '" . $salesDate . "' , 0 , " . $price . " , " . $in_stock . ")";
-    var_dump($sql);
+    // var_dump($sql);
     $con->query($sql);
 }
 
@@ -57,7 +57,7 @@ if (!empty($_POST['add'])) {
     //SESSIONの「success」に「登録が完了しました」と設定する。
     $_SESSION['success'] = '登録が完了しました。';
     //「header」関数を使用して在庫一覧画面へ遷移する。
-    // header("Location: zaiko_ichiran.php");
+    header("Location: zaiko_ichiran.php");
 }
 ?>
 
