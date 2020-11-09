@@ -40,7 +40,11 @@ if ($mysqli->connect_error) {
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 $sql = "SELECT * FROM books";
 $bookdate = $mysqli->query($sql);
-
+if (isset($_POST['add'])) {
+	echo "登録ボタンが押下されました";
+} else if (isset($_POST['remove'])) {
+	echo "削除ボタンが押下されました";
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -98,9 +102,24 @@ $bookdate = $mysqli->query($sql);
 							<th id="id">ID</th>
 							<th id="book_name">書籍名</th>
 							<th id="author">著者名</th>
-							<th id="salesDate">発売日</th>
-							<th id="itemPrice">金額</th>
-							<th id="stock">在庫数</th>
+							<th id="salesDate">発売日<br>
+								<form action="zaiko_ichiran.php" method="post">
+									<input type="submit" name="add" value="昇順" />
+									<input type="submit" name="remove" value="降順" />
+								</form></button>
+							</th>
+							<th id="itemPrice">金額<br>
+								<form action="zaiko_ichiran.php" method="post">
+									<input type="submit" name="add" value="昇順" />
+									<input type="submit" name="remove" value="降順" />
+								</form></button>
+							</th>
+							<th id="stock">在庫数<br>
+								<form action="zaiko_ichiran.php" method="post">
+									<input type="submit" name="add" value="昇順" />
+									<input type="submit" name="remove" value="降順" />
+								</form></button>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
