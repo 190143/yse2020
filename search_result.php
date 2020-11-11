@@ -56,7 +56,7 @@ if (strcmp($_POST['stock'], 1) !== 0) {
 
 //タイトル検索 + 発売年代のSQL + 金額 + 在庫数
 $sql = "SELECT * FROM `books` WHERE `title` LIKE '" . $_POST['keyword'] . "%'" . $salesData . $price . $stock;
-var_dump($sql);
+// var_dump($sql);
 
 // 実行
 $bookdate = $mysqli->query($sql);
