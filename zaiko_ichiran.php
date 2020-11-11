@@ -40,10 +40,36 @@ if ($mysqli->connect_error) {
 //⑦書籍テーブルから書籍情報を取得するSQLを実行する。また実行結果を変数に保存する
 $sql = "SELECT * FROM books";
 $bookdate = $mysqli->query($sql);
-if (isset($_POST['add'])) {
-	echo "登録ボタンが押下されました";
-} else if (isset($_POST['remove'])) {
-	echo "削除ボタンが押下されました";
+
+//発売日（昇順、降順）
+if (isset($_POST['release_date_up'])) {
+	$sql = "SELECT * FROM books WHERE 1 ORDER BY salesDate DESC";
+	$bookdate = $mysqli->query($sql);
+	//echo "昇順ボタンが押下されました";
+} else if (isset($_POST['release_date_down'])) {
+	$sql = "SELECT * FROM books WHERE 1 ORDER BY salesDate ASC";
+	$bookdate = $mysqli->query($sql);
+	//echo "降順ボタンが押下されました";
+}
+//金額（昇順、降順）
+if (isset($_POST['money_up'])) {
+	$sql = "SELECT * FROM books WHERE 1 ORDER BY price DESC";
+	$bookdate = $mysqli->query($sql);
+	//echo "昇順ボタンが押下されました";
+} else if (isset($_POST['money_down'])) {
+	$sql = "SELECT * FROM books WHERE 1 ORDER BY price ASC";
+	$bookdate = $mysqli->query($sql);
+	//echo "降順ボタンが押下されました";
+}
+//在庫数（昇順、降順）
+if (isset($_POST['stock_up'])) {
+	$sql = "SELECT * FROM books WHERE 1 ORDER BY stock DESC";
+	$bookdate = $mysqli->query($sql);
+	//echo "昇順ボタンが押下されました";
+} else if (isset($_POST['stock_down'])) {
+	$sql = "SELECT * FROM books WHERE 1 ORDER BY stock ASC";
+	$bookdate = $mysqli->query($sql);
+	//echo "降順ボタンが押下されました";
 }
 ?>
 <!DOCTYPE html>
@@ -102,20 +128,20 @@ if (isset($_POST['add'])) {
 							<th id="author">著者名</th>
 							<th id="salesDate">発売日<br>
 								<form action="zaiko_ichiran.php" method="post">
-									<input type="submit" name="add" value="昇順" />
-									<input type="submit" name="remove" value="降順" />
+									<input type="submit" name="release_date_up" value="昇順" />
+									<input type="submit" name="release_date_down" value="降順" />
 								</form></button>
 							</th>
 							<th id="itemPrice">金額<br>
 								<form action="zaiko_ichiran.php" method="post">
-									<input type="submit" name="add" value="昇順" />
-									<input type="submit" name="remove" value="降順" />
+									<input type="submit" name="money_up" value="昇順" />
+									<input type="submit" name="money_down" value="降順" />
 								</form></button>
 							</th>
 							<th id="stock">在庫数<br>
 								<form action="zaiko_ichiran.php" method="post">
-									<input type="submit" name="add" value="昇順" />
-									<input type="submit" name="remove" value="降順" />
+									<input type="submit" name="stock_up" value="昇順" />
+									<input type="submit" name="stock_down" value="降順" />
 								</form></button>
 							</th>
 						</tr>
