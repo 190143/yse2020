@@ -16,6 +16,7 @@ session_start();
 
 //①名前とパスワードを入れる変数を初期化する
 $name = null;
+$account_name = null;
 $password = null;
 
 // エラーメッセージを入れる変数
@@ -33,9 +34,9 @@ if (isset($_POST['decision'])) {
 	 * ③名前とパスワードが両方とも入力されているかを判定する。
 	 * 入力されていた場合はif文の中の処理を行う。
 	 */
-	if (!empty($_POST['name']) && !empty($_POST['pass'])) {
+	if (!empty($_POST['account_name']) && !empty($_POST['pass'])) {
 		//④名前とパスワードにPOSTで送られてきた名前とパスワードを設定する
-		$name = $_POST['name'];
+		$account_name = $_POST['account_name'];
 		$password = $_POST['pass'];
 	} else {
 		//⑤名前かパスワードが入力されていない場合は、「名前かパスワードが未入力です」という文言をメッセージを入れる変数に設定する
@@ -44,11 +45,11 @@ if (isset($_POST['decision'])) {
 }
 
 //⑦名前が入力されているか判定する。入力されていた場合はif文の中に入る
-if (!empty($name)) {
+if (!empty($account_name)) {
 	//⑧名前に「yse」、パスワードに「2019」と設定されているか確認する。設定されていた場合はif文の中に入る
-	if ($name == 'yse' && $password == '2019') {
+	if ($account_name == 'yse' && $password == '2019') {
 		//⑨SESSIONに名前を設定し、SESSIONの「login」フラグをtrueにする
-		$_SESSION['name'] = $name;
+		$_SESSION['account_name'] = $account_name;
 		$_SESSION['login'] = true;
 
 		//⑩在庫一覧画面へ遷移する
@@ -88,7 +89,7 @@ if (!empty($_SESSION['error2'])) {
 		?>
 		<form action="login.php" method="post" id="log">
 			<p>
-				<input type='text' name="name" size='5' placeholder="Username">
+				<input type='text' name="account_name" size='5' placeholder="Username">
 			</p>
 			<p>
 				<input type='password' name='pass' size='5' maxlength='20' placeholder="Password">
