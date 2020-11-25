@@ -10,17 +10,40 @@ if ((function_exists('session_status')
 }
 
 // データーベースに追加
-function new_prodict($con, $id, $title, $author, $salesDate, $price, $in_stock)
+function new_prodict($con, $id, $title, $author, $salesDate, $isbn, $price,  $in_stock)
 {
 
     // SQL文
     // ID / タイトル / 著作者人 / 発売日 / ISBNコード / 価格 / 在庫数 / 入荷数
-    $sql = "INSERT INTO books (id, title, author, salesDate, isbn, price, stock, display) VALUES (" . $id . " , '" . $title . "' , '" . $author . "' , '" . $salesDate . "' , 0 , " . $price . " , " . $in_stock . " , 1)";
+    $sql = "INSERT INTO books (id, title, author, salesDate, isbn, price, stock, display) VALUES (" . $id . " , '" . $title . "' , '" . $author . "' , '" . $salesDate . "' , $isbn , " . $price . " , " . $in_stock . " , 1)";
+    var_dump($sql);
     // ...↓
     // $sql = "INSERT INTO books (title, author, salesDate, isbn, price, stock) VALUES ('" . $title . "' , '" . $author . "' , '" . $salesDate . "' , 0 , " . $price . " , " . $in_stock . ")";
     // var_dump($sql);
     $con->query($sql);
 }
+
+// Is_Numericが$_POST[]のままだと正常に動作しないので箱に入れる
+$isbn;
+$price;
+$stock;
+if (!empty($_POST['isbn']) && !empty($_POST['price']) && !empty($_POST['stock'])) {
+    $isbn = $_POST['isbn'];
+    $price = $_POST['price'];
+    $stock = $_POST['stock'];
+
+    // 数値以外が入力されていた場合
+    if (!is_numeric($isbn) || !is_numeric($price) || !is_numeric($stock)) {
+        //⑬SESSIONの「error」に「数値以外が入力されています」と設定する。
+        $_SESSION['error'] = '数値以外が入力されています';
+        //⑭「include」を使用して「new_product.php」を呼び出す。
+        include 'new_product.php';
+        //⑮「exit」関数で処理を終了する。
+        exit;
+    }
+}
+
+
 
 // カレンダーの「-」を年・月・日に変換
 // 一文字が入る変数
@@ -97,7 +120,7 @@ if (!empty($_POST['add'])) {
         // $date = $_POST['salesDate_year'] . "年" . $_POST['salesDate_month'] . "月" . $_POST['salesDate_day'] . "日";
         $date = $letter;
         // SQLに追加
-        new_prodict($mysqli, $_POST['id'], $_POST['title'], $_POST['author'], $date, $_POST['price'], $_POST['in_stock']);
+        new_prodict($mysqli, $_POST['id'], $_POST['title'], $_POST['author'],  $date, $_POST['isbn'], $_POST['price'], $_POST['in_stock']);
     }
     //SESSIONの「success」に「登録が完了しました」と設定する。
     $_SESSION['success'] = '登録が完了しました。';
@@ -134,6 +157,7 @@ if (!empty($_POST['add'])) {
                             <th id="book_name">書籍名</th>
                             <th id="author">著者名</th>
                             <th id="salesDate">発売日</th>
+                            <th id="sa">ISBN</th>
                             <th id="itemPrice">金額(円)</th>
                             <th id="stock">在庫数</th>
                             <th id="in">入荷数</th>
@@ -143,6 +167,7 @@ if (!empty($_POST['add'])) {
                     <input type="hidden" value="<?php echo $_POST['id']; ?>" name="id">
                     <input type="hidden" value="<?php echo $_POST['title']; ?>" name="title">
                     <input type="hidden" value="<?php echo $_POST['author']; ?>" name="author">
+                    <input type="hidden" value="<?php echo $_POST['isbn']; ?>" name="isbn">
                     <!-- 年・月・日に変換したもの -->
                     <input type="hidden" value="<?php echo $letter; ?>" name="salesDate">
                     <input type="hidden" value="<?php echo $_POST['price']; ?>" name="price">
@@ -153,6 +178,7 @@ if (!empty($_POST['add'])) {
                         <td><?php echo $_POST['title']; ?></td>
                         <td><?php echo $_POST['author']; ?></td>
                         <td><?php echo $letter; ?></td>
+                        <td><?php echo $_POST['isbn']; ?></td>
                         <td><?php echo $_POST['price']; ?></td>
                         <td><?php echo $_POST['stock']; ?></td>
                         <td><?php echo $_POST['in_stock']; ?></td>

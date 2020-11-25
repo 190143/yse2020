@@ -74,6 +74,14 @@ $bookdate->close();
 		<div id="pagebody">
 			<!-- エラーメッセージ -->
 			<div id="error">
+				<?php
+				//⑬SESSIONの「error」にメッセージが設定されているかを判定する。
+				//設定されていた場合はif文の中に入る。
+				if (isset($_SESSION["error"])) {
+					//⑭SESSIONの「error」の中身を表示する。
+					echo $_SESSION["error"];
+				}
+				?>
 			</div>
 			<div id="center">
 				<table>
@@ -83,6 +91,7 @@ $bookdate->close();
 							<th id="book_name">書籍名</th>
 							<th id="author">著者名</th>
 							<th id="salesDate">発売日</th>
+							<th id="sa">ISBN</th>
 							<th id="itemPrice">金額(円)</th>
 							<th id="stock">在庫数</th>
 							<th id="in">入荷数</th>
@@ -96,6 +105,8 @@ $bookdate->close();
 						<td><input type="text" name='author' size='5' required></td>
 						<!-- カレンダー -->
 						<td><input type="date" name="salesDate" required></td>
+						<!-- ISBN -->
+						<td><input type="text" name="isbn" required></td>
 						<!-- 値段 -->
 						<td><input type="text" name='price' size='5' maxlength='11' required></td>
 						<!-- 在庫数 -->
