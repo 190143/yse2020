@@ -123,7 +123,6 @@ $bookdate = $mysqli->query($sql);
                         <?php
                         // 一致しない場合は検索画面に移動してエラーを表示させる
                         if(empty($bookdate->fetch_assoc())){
-                            var_dump('一致しません');
                             $_SESSION["error"] = '検索結果に一致する書籍がみつかりませんでした。';
                             header("Location: product_search.php");
                         }
